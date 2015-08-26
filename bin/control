@@ -3,14 +3,7 @@ source $OPENSHIFT_CARTRIDGE_SDK_BASH
 source $OPENSHIFT_HEROKU_DIR/include/herokuish.bash
 
 function build() {
-    echo "!!! BUILDING"
-    herokuish buildpack list | grep -q heroku-buildpack-ruby
-    if [ $? -eq 1 ]; then
-        echo "Installing buildpacks"
-        # herokuish buildpack install
-        herokuish buildpack install https://github.com/heroku/heroku-buildpack-ruby v138
-    fi
-
+    echo "Building"
     herokuish buildpack build
 }
 
@@ -55,8 +48,6 @@ function tidy() {
     shopt -s dotglob
     rm -rf $OPENSHIFT_LOG_DIR/heroku.log*
 }
-
-echo "!!! CONTROL CALLED WITH $1"
 
 case "$1" in
   build)     build ;;

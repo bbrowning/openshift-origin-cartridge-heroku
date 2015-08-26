@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "!!! Running setup"
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 case "$1" in
@@ -13,4 +12,12 @@ dirname $(scl enable ruby200 "which ruby") > $env_dir/OPENSHIFT_HEROKU_PATH_ELEM
 ld_path=$(LD_LIBRARY_PATH="" scl enable ruby200 "printenv LD_LIBRARY_PATH")
 set_env_var "OPENSHIFT_HEROKU_LD_LIBRARY_PATH_ELEMENT" $ld_path $env_dir
 
-echo "!!! Added Ruby path elements"
+
+source $OPENSHIFT_HEROKU_DIR/include/herokuish.bash
+
+herokuish buildpack list | grep -q heroku-buildpack-ruby
+if [ $? -eq 1 ]; then
+    echo "Installing buildpacks"
+    # herokuish buildpack install
+    herokuish buildpack install https://github.com/heroku/heroku-buildpack-ruby v138
+fi
