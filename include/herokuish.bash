@@ -1,10 +1,3 @@
-# Make sure we're running under a modern Ruby env needed by buildpacks
-# TODO: Push to setup/install script - see ruby cartridge for example
-ruby -v | grep -q 2\.0
-if [ $? -eq 1 ]; then
-    exec scl enable ruby200 "$0 $@"
-fi
-
 # Uncomment to enable trace logging
 export TRACE=true
 
