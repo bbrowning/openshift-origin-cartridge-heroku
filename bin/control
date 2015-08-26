@@ -36,7 +36,7 @@ function restart() {
 }
 
 function status() {
-    if output=$(curl http://$OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT 2>&1)
+    if output=$(curl http://$OPENSHIFT_HEROKU_IP:$OPENSHIFT_HEROKU_PORT 2>&1)
     then
         client_result "Application is running"
     else
