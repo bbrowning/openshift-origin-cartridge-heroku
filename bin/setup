@@ -8,7 +8,7 @@ case "$1" in
 esac
 
 # Make sure a recent Ruby version is available for buildpacks
-$env_dir="${OPENSHIFT_HEROKU_DUR}/env"
+env_dir="${OPENSHIFT_HEROKU_DUR}/env"
 dirname $(scl enable ruby200 "which ruby") > $env_dir/OPENSHIFT_HEROKU_PATH_ELEMENT
 ld_path=$(LD_LIBRARY_PATH="" scl enable ruby200 "printenv LD_LIBRARY_PATH")
 set_env_var "OPENSHIFT_HEROKU_LD_LIBRARY_PATH_ELEMENT" $ld_path $env_dir
