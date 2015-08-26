@@ -8,12 +8,16 @@ fi
 # Uncomment to enable trace logging
 # export TRACE=true
 
+# Env variables used be Herokuish
 export APP_PATH=${OPENSHIFT_DEPENDENCIES_DIR}app
 export ENV_PATH=${OPENSHIFT_DEPENDENCIES_DIR}env
 export BUILD_PATH=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}build
 export CACHE_PATH=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}cache
 export IMPORT_PATH=${OPENSHIFT_REPO_DIR}
 export BUILDPACK_PATH=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}buildpacks
+
+# Env variables expected by Heroku buildpacks
+export PORT=$OPENSHIFT_HEROKU_PORT
 
 source $OPENSHIFT_HEROKU_DIR/include/fn.bash
 source $OPENSHIFT_HEROKU_DIR/include/cmd.bash
