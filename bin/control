@@ -1,0 +1,67 @@
+#!/bin/bash
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+source $OPENSHIFT_HEROKU_DIR/include/herokuish.bash
+
+function build() {
+    herokuish buildpack list | grep -q heroku-buildpack-ruby
+    if [ $? -eq 1 ]; then
+        echo "Installing buildpacks"
+        # herokiush buildpack install
+        herokiush buildpack install https://github.com/heroku/heroku-buildpack-ruby v138
+    fi
+
+    herokuish buildpack build
+}
+
+function start() {
+    echo "Starting"
+    herokuish procfile start web |& /usr/bin/logshifter -tag $cartridge_type &
+}
+
+function stop() {
+    echo "Stopping"
+    local command=`eval echo $(procfile-parse web)`
+
+    if [ -z "$(ps -ef | grep "$command" | grep -v grep)" ]
+    then
+        client_result "Application is already stopped"
+    else
+        kill `ps -ef | grep "$command" | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
+    fi
+}
+
+function restart() {
+    stop
+    start
+}
+
+function status() {
+    if output=$(curl http://$OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT 2>&1)
+    then
+        client_result "Application is running"
+    else
+        client_result "Application is either stopped or inaccessible"
+    fi
+}
+
+function reload() {
+    client_result "Reloading"
+    restart
+}
+
+function tidy() {
+    client_message "Emptying $cartridge_type logs in dir: $OPENSHIFT_LOGIDR"
+    shopt -s dotglob
+    rm -rf $OPENSHIFT_LOG_DIR/$cartridge_type.log*
+}
+
+case "$1" in
+  build)     build ;;
+  start)     start ;;
+  stop)      stop ;;
+  restart)   restart ;;
+  status)    status ;;
+  reload)    reload ;;
+  tidy)      tidy ;;
+  *)         exit 0
+esac
