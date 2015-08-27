@@ -16,7 +16,7 @@ source $OPENSHIFT_HEROKU_DIR/include/procfile.bash
 source $OPENSHIFT_HEROKU_DIR/include/slug.bash
 
 function yaml-keys {
-    ruby -e "require 'yaml'; puts YAML.load(\$stdin).keys"
+    ruby -e "require 'yaml'; yaml = YAML.load(\$stdin); puts yaml.keys if yaml"
 }
 
 function yaml-get {
