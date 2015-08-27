@@ -9,6 +9,9 @@ function build() {
 
 function start() {
     echo "Starting"
+    local bundle_path=`dirname $CACHE_PATH/cedar/vendor/bundle/ruby/*/bin/bundle`
+    export PATH=$bundle_path:$PATH
+    echo "Adding $bundle_path to PATH"
     herokuish procfile start web |& /usr/bin/logshifter -tag heroku &
 }
 
