@@ -12,8 +12,7 @@ procfile-start() {
 }
 
 procfile-exec() {
-	declare desc="Run as unprivileged user with Heroku-like env"
-	# [[ "$USER" ]] || detect-unprivileged
+	declare desc="Run with Heroku-like env"
 	procfile-setup-home
 	procfile-load-env
 	procfile-load-profile
@@ -65,6 +64,4 @@ procfile-load-profile() {
 
 procfile-setup-home() {
 	export HOME="$app_path"
-	# usermod --home "$app_path" "$unprivileged_user" > /dev/null 2>&1
-	# chown -R "$unprivileged_user:$unprivileged_group" "$app_path"
 }
