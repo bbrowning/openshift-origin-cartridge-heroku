@@ -15,6 +15,9 @@ source $OPENSHIFT_HEROKU_DIR/include/buildpack.bash
 source $OPENSHIFT_HEROKU_DIR/include/procfile.bash
 source $OPENSHIFT_HEROKU_DIR/include/slug.bash
 
+unset GEM_HOME
+unset GEM_PATH
+
 function yaml-keys {
     ruby -e "require 'yaml'; yaml = YAML.load(\$stdin); puts yaml.keys if yaml"
 }
