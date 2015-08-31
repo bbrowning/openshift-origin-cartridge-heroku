@@ -9,7 +9,7 @@ function build() {
 
 function start() {
     echo "Starting"
-    export GEM_HOME=`dirname $CACHE_PATH/cedar/vendor/bundle/ruby/*/`
+    export GEM_HOME=`echo $CACHE_PATH/cedar/vendor/bundle/ruby/*/`
     echo "SETTING GEM_HOME OF $GEM_HOME"
     # local bundle_path=`dirname $CACHE_PATH/cedar/vendor/bundle/ruby/*/bin/bundle`
     # export PATH=$bundle_path:$PATH
