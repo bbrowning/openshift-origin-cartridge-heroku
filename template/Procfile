@@ -1,1 +1,1 @@
-web: bundle exec puma -p $PORT
+web: bundle exec puma -b tcp://$OPENSHIFT_HEROKU_IP:$OPENSHIFT_HEROKU_PORT
